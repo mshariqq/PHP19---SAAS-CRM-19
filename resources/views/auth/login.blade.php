@@ -36,9 +36,10 @@
 
 @section('content')
 
+		<div class="card bg-white">
 		<div class="card-body">
 			<div>
-				<h2 class="mb-3 f-w-600">{{ __('Please Login') }}</h2>
+				<h4 class="mb-3 f-w-600">{{ __('Please Login') }}</h4>
 			</div>
             @if(session('error'))
             <div class="alert alert-danger">
@@ -49,7 +50,7 @@
 				<form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
 				@csrf
 					<div class="form-group mb-3">
-						<label class="form-label">{{ __('Email') }}</label>
+						<label class="form-label"> <i class="fa fa-envelope" aria-hidden="true"></i> {{ __('Email') }}</label>
 						<input id="email" type="email" class="form-control  @error('email') is-invalid @enderror"
 							name="email" placeholder="{{ __('Enter your email') }}"
 							required autofocus>
@@ -60,7 +61,7 @@
 						@enderror
 					</div>
 					<div class="form-group mb-3 pss-field">
-						<label class="form-label">{{ __('Password') }}</label>
+						<label class="form-label"> <i class="fa fa-lock" aria-hidden="true"></i> {{ __('Password') }}</label>
 						<input id="password" type="password" class="form-control  @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required>
 						@error('password')
 							<span class="error invalid-password text-danger" role="alert">
@@ -88,17 +89,21 @@
 						</div>
 					@endif
 					<div class="d-grid">
-						<button class="btn btn-primary mt-2" type="submit">
-							{{ __('Login') }}
+						<button class="btn btn-success mt-2" type="submit">
+							{{ __('Login') }} <i class="fa fa-key" aria-hidden="true"></i>
 						</button>
 					</div>
 				</form>
-				@if(Utility::getValByName('SIGNUP')=='on')
-					<p class="my-4 text-center">{{ __("Don't have an account?") }}
+				
+			</div>
+		</div>
+		<div class="card-footer">
+		@if(Utility::getValByName('SIGNUP')=='on')
+					<p class=" text-center">{{ __("Don't have an account?") }}
 						<a href="{{route('register',$lang)}}" tabindex="0">{{__('Register')}}</a>
 					</p>
 				@endif
-			</div>
+		</div>
 		</div>
 <!-- [ auth-signup ] end -->
 

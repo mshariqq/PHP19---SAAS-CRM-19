@@ -10,11 +10,158 @@
     //  dd($company_logo);
 @endphp
 
-@if (isset($settings['cust_theme_bg']) && $settings['cust_theme_bg'] == 'on')
+
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #54595f;">
+
+    <a href="#" class="b-brand">
+
+            @if ($settings['cust_darklayout'] == 'on')
+                <img width="40px0" height="auto" src="{{ $logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-light.png') . '?timestamp=' . time() }}"
+                    alt="" class="img-fluid" />
+            @else
+                <img width="40px0" height="auto" src="{{ $logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') . '?timestamp=' . time() }}"
+                    alt="" class="img-fluid" />
+            @endif
+
+            <span class="badge badge-pill badge-warning bg-warning">LOGO</span>
+
+        </a>
+
+
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('dashboard') }}"><span class="dash-micon"><i
+                            class="ti ti-home"></i></span> {{ __('Dashboard') }} </a>
+            </li>
+            @if (\Auth::user()->type == 'super admin')
+            <li class="nav-item">
+                <a class="nav-link {{ Request::segment(1) == 'users' ? 'active' : '' }}" href="{{ route('users.index') }}">
+                <span class="dash-micon"><i class="ti ti-users"></i></span> {{ __('Clients') }} </a>
+            </li>
+               
+            @endif
+      
+
+            @if (\Auth::user()->type == 'company')
+                <li
+                    class="nav-item {{ Request::segment(1) == 'employee' || Request::segment(1) == 'client' || Request::segment(1) == 'userlogs' || Request::segment(1) == 'clientlogs' ? 'active dash-trigger' : '' }}">
+                    <a class="dash-link " data-toggle="collapse" role="button"
+                        aria-controls="navbar-getting-started"><span class="dash-micon"><i
+                                class="ti ti-users"></i></span><span class="dash-mtext">{{ __('Staff') }}</span><span
+                            class="dash-arrow"><i data-feather="chevron-right"></i></span></a>
+                    <ul class="dash-submenu">
+                        <li
+                            class="dash-item dash-hasmenu {{ Request::segment(1) == 'employee' || Request::segment(1) == 'userlogs' ? 'active ' : '' }}">
+                            <a class="dash-link" href="{{ route('employee.index') }}">{{ __('Employee') }}</span></a>
+
+                        </li>
+                        <li
+                            class="dash-item dash-hasmenu {{ Request::segment(1) == 'client' || Request::segment(1) == 'clientlogs' ? 'active' : '' }}">
+                            <a class="dash-link" href="{{ route('client.index') }}">{{ __('Client') }}</a>
+
+                        </li>
+
+                    </ul>
+                </li>
+            @elseif(\Auth::user()->type == 'employee')
+                <li class="dash-item  {{ Request::segment(1) == 'employee' ? 'active ' : '' }}">
+                    <a href="{{ route('employee.show', \Crypt::encrypt(\Auth::user()->id)) }}" class="dash-link"><span
+                            class="dash-micon"><i class="ti ti-accessible"></i></span><span
+                            class="dash-mtext">{{ __('My Profile') }}</span></a>
+
+                </li>
+            @elseif(\Auth::user()->type == 'client')
+                <li class="dash-item {{ Request::segment(1) == 'client' ? 'active ' : '' }}">
+                    <a href="{{ route('client.show', \Crypt::encrypt(\Auth::user()->id)) }}" class="dash-link"><span
+                            class="dash-micon"><i class="ti ti-home"></i></span><span
+                            class="dash-mtext">{{ __('My Profile') }}</span></a>
+
+                </li>
+            @endif
+
+            @if (\Auth::user()->type == 'super admin')
+                <li class="nav-item {{ request()->is('zoommeeting*') ? 'active' : '' }}">
+                    <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('zoommeeting')) ? route(\Auth::user()->getDefualtViewRouteByModule('zoommeeting')) : route('zoommeeting.index') }}"
+                        class="nav-link">
+                        <span class="dash-micon"><i class="ti ti-video-plus"></i></span>
+                         {{ __('Zoom Meeting') }}</a>
+                </li>
+            @endif
+
+
+
+
+
+            @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company')
+                <li class="nav-item @if (str_contains(request()->url(), 'stripe')) active @endif">
+                    <a href="{{ route('plan.index') }}" class="nav-link">
+                        <span class="dash-micon"><i
+                                class="ti ti-trophy"></i></span> {{ __('Plans') }}</a>
+                </li>
+            @endif
+
+            @if (\Auth::user()->type == 'super admin')
+                <li class="nav-item">
+                    <a href="{{ route('plan_request.index') }}" class="nav-link"><span class="dash-micon"><i
+                                class="ti ti-git-pull-request"></i></span>
+                                {{ __('Plan Requests') }}</a>
+                </li>
+            @endif
+
+
+
+            @if (\Auth::user()->type == 'super admin')
+                <li class="nav-item {{ Request::segment(1) == 'coupon' ? 'active' : '' }}">
+                    <a href="{{ route('coupon.index') }}" class="nav-link"><span class="dash-micon"><i
+                                class="ti ti-clipboard-check"></i></span> {{ __('Coupons') }}</a>
+                </li>
+            @endif
+
+            @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company')
+                <li class="nav-item">
+                    <a href="{{ route('order.index') }}" class="nav-link"><span class="dash-micon"><i
+                                class="ti ti-shopping-cart"></i></span>{{ __('Orders') }}</a>
+                </li>
+            @endif
+
+            @if (\Auth::user()->type == 'super admin')
+                <li
+                    class="nav-item {{ request()->is('email_template*') || request()->is('emailtemplate_lang*') ? 'active' : '' }}">
+                    <a href="{{ route('manage.email.language', [$emailTemplate->id, \Auth::user()->lang]) }}"
+                        class="nav-link">
+                        <span class="nav-micon"><i class="ti ti-template"></i></span>
+                        {{ __('Email Template') }}</a>
+                </li>
+            @endif
+
+
+            @if (\Auth::user()->type == 'super admin')
+                @include('landingpage::menu.landingpage')
+            @endif
+
+            @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company')
+                <li class="nav-item">
+                    <a href="{{ route('settings') }}" class="nav-link"><span class="dash-micon"><i
+                                class="ti ti-settings"></i></span>{{ __('Settings') }}</a>
+                </li>
+            @endif
+
+        </ul>
+        
+    </div>
+</nav>
+
+
+<!-- @if (isset($settings['cust_theme_bg']) && $settings['cust_theme_bg'] == 'on')
     <nav class="dash-sidebar light-sidebar transprent-bg">
     @else
         <nav class="dash-sidebar light-sidebar">
-@endif
+@endif -->
+
+
 <div class="navbar-wrapper">
     <div class="m-header main-logo">
         <a href="#" class="b-brand">
@@ -29,9 +176,10 @@
 
         </a>
     </div>
+
     <div class="navbar-content">
         <ul class="dash-navbar">
-            <li class="dash-item">
+            <!-- <li class="dash-item">
                 <a href="{{ route('dashboard') }}" class="dash-link"><span class="dash-micon"><i
                             class="ti ti-home"></i></span><span class="dash-mtext">{{ __('Dashboard') }}</span></a>
             </li>
@@ -44,9 +192,9 @@
                             class="dash-mtext">{{ __('Company') }} </span>
                     </a>
                 </li>
-            @endif
+            @endif -->
 
-            @if (\Auth::user()->type == 'company')
+            <!-- @if (\Auth::user()->type == 'company')
                 <li
                     class="dash-item dash-hasmenu {{ Request::segment(1) == 'employee' || Request::segment(1) == 'client' || Request::segment(1) == 'userlogs' || Request::segment(1) == 'clientlogs' ? 'active dash-trigger' : '' }}">
                     <a class="dash-link " data-toggle="collapse" role="button"
@@ -81,7 +229,9 @@
                             class="dash-mtext">{{ __('My Profile') }}</span></a>
 
                 </li>
-            @endif
+            @endif -->
+
+
 
             @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'employee')
                 <li class="dash-item dash-hasmenu">
@@ -339,13 +489,13 @@
                 </li>
             @endif
 
-            @if (\Auth::user()->type != 'super admin')
+            <!-- @if (\Auth::user()->type != 'super admin')
                 <li class="dash-item {{ request()->is('zoommeeting*') ? 'active' : '' }}">
                     <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('zoommeeting')) ? route(\Auth::user()->getDefualtViewRouteByModule('zoommeeting')) : route('zoommeeting.index') }}"
                         class="dash-link"><span class="dash-micon"><i class="ti ti-video-plus"></i></span><span
                             class="dash-mtext">{{ __('Zoom Metting') }}</span></a>
                 </li>
-            @endif
+            @endif -->
 
             @if (\Auth::user()->type == 'company' || \Auth::user()->type == 'client')
                 <li class="dash-item {{ request()->is('contract*') ? 'active' : '' }}">
@@ -487,7 +637,7 @@
                 </li>
             @endif
 
-            @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company')
+            <!-- @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company')
                 <li class="dash-item @if (str_contains(request()->url(), 'stripe')) active @endif">
                     <a href="{{ route('plan.index') }}" class="dash-link"><span class="dash-micon"><i
                                 class="ti ti-trophy"></i></span><span
@@ -525,7 +675,7 @@
                         class="dash-link"><span class="dash-micon"><i class="ti ti-template"></i></span><span
                             class="dash-mtext">{{ __('Email Template') }}</span></a>
                 </li>
-            @endif
+            @endif -->
 
 
             @if (\Auth::user()->type == 'company')
@@ -643,7 +793,7 @@
                 </li>
             @endif
 
-            @if (\Auth::user()->type == 'super admin')
+            <!-- @if (\Auth::user()->type == 'super admin')
                 @include('landingpage::menu.landingpage')
             @endif
 
@@ -653,10 +803,9 @@
                                 class="ti ti-settings"></i></span><span
                             class="dash-mtext">{{ __('Settings') }}</span></a>
                 </li>
-            @endif
+            @endif -->
 
         </ul>
     </div>
 </div>
 </nav>
-<!-- [ navigation menu ] end -->

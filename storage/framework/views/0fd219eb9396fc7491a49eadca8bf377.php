@@ -10,11 +10,158 @@
     //  dd($company_logo);
 ?>
 
-<?php if(isset($settings['cust_theme_bg']) && $settings['cust_theme_bg'] == 'on'): ?>
+
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #54595f;">
+
+    <a href="#" class="b-brand">
+
+            <?php if($settings['cust_darklayout'] == 'on'): ?>
+                <img width="40px0" height="auto" src="<?php echo e($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-light.png') . '?timestamp=' . time()); ?>"
+                    alt="" class="img-fluid" />
+            <?php else: ?>
+                <img width="40px0" height="auto" src="<?php echo e($logo . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo-dark.png') . '?timestamp=' . time()); ?>"
+                    alt="" class="img-fluid" />
+            <?php endif; ?>
+
+            <span class="badge badge-pill badge-warning bg-warning">LOGO</span>
+
+        </a>
+
+
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="<?php echo e(route('dashboard')); ?>"><span class="dash-micon"><i
+                            class="ti ti-home"></i></span> <?php echo e(__('Dashboard')); ?> </a>
+            </li>
+            <?php if(\Auth::user()->type == 'super admin'): ?>
+            <li class="nav-item">
+                <a class="nav-link <?php echo e(Request::segment(1) == 'users' ? 'active' : ''); ?>" href="<?php echo e(route('users.index')); ?>">
+                <span class="dash-micon"><i class="ti ti-users"></i></span> <?php echo e(__('Clients')); ?> </a>
+            </li>
+               
+            <?php endif; ?>
+      
+
+            <?php if(\Auth::user()->type == 'company'): ?>
+                <li
+                    class="nav-item <?php echo e(Request::segment(1) == 'employee' || Request::segment(1) == 'client' || Request::segment(1) == 'userlogs' || Request::segment(1) == 'clientlogs' ? 'active dash-trigger' : ''); ?>">
+                    <a class="dash-link " data-toggle="collapse" role="button"
+                        aria-controls="navbar-getting-started"><span class="dash-micon"><i
+                                class="ti ti-users"></i></span><span class="dash-mtext"><?php echo e(__('Staff')); ?></span><span
+                            class="dash-arrow"><i data-feather="chevron-right"></i></span></a>
+                    <ul class="dash-submenu">
+                        <li
+                            class="dash-item dash-hasmenu <?php echo e(Request::segment(1) == 'employee' || Request::segment(1) == 'userlogs' ? 'active ' : ''); ?>">
+                            <a class="dash-link" href="<?php echo e(route('employee.index')); ?>"><?php echo e(__('Employee')); ?></span></a>
+
+                        </li>
+                        <li
+                            class="dash-item dash-hasmenu <?php echo e(Request::segment(1) == 'client' || Request::segment(1) == 'clientlogs' ? 'active' : ''); ?>">
+                            <a class="dash-link" href="<?php echo e(route('client.index')); ?>"><?php echo e(__('Client')); ?></a>
+
+                        </li>
+
+                    </ul>
+                </li>
+            <?php elseif(\Auth::user()->type == 'employee'): ?>
+                <li class="dash-item  <?php echo e(Request::segment(1) == 'employee' ? 'active ' : ''); ?>">
+                    <a href="<?php echo e(route('employee.show', \Crypt::encrypt(\Auth::user()->id))); ?>" class="dash-link"><span
+                            class="dash-micon"><i class="ti ti-accessible"></i></span><span
+                            class="dash-mtext"><?php echo e(__('My Profile')); ?></span></a>
+
+                </li>
+            <?php elseif(\Auth::user()->type == 'client'): ?>
+                <li class="dash-item <?php echo e(Request::segment(1) == 'client' ? 'active ' : ''); ?>">
+                    <a href="<?php echo e(route('client.show', \Crypt::encrypt(\Auth::user()->id))); ?>" class="dash-link"><span
+                            class="dash-micon"><i class="ti ti-home"></i></span><span
+                            class="dash-mtext"><?php echo e(__('My Profile')); ?></span></a>
+
+                </li>
+            <?php endif; ?>
+
+            <?php if(\Auth::user()->type == 'super admin'): ?>
+                <li class="nav-item <?php echo e(request()->is('zoommeeting*') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(!empty(\Auth::user()->getDefualtViewRouteByModule('zoommeeting')) ? route(\Auth::user()->getDefualtViewRouteByModule('zoommeeting')) : route('zoommeeting.index')); ?>"
+                        class="nav-link">
+                        <span class="dash-micon"><i class="ti ti-video-plus"></i></span>
+                         <?php echo e(__('Zoom Meeting')); ?></a>
+                </li>
+            <?php endif; ?>
+
+
+
+
+
+            <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company'): ?>
+                <li class="nav-item <?php if(str_contains(request()->url(), 'stripe')): ?> active <?php endif; ?>">
+                    <a href="<?php echo e(route('plan.index')); ?>" class="nav-link">
+                        <span class="dash-micon"><i
+                                class="ti ti-trophy"></i></span> <?php echo e(__('Plans')); ?></a>
+                </li>
+            <?php endif; ?>
+
+            <?php if(\Auth::user()->type == 'super admin'): ?>
+                <li class="nav-item">
+                    <a href="<?php echo e(route('plan_request.index')); ?>" class="nav-link"><span class="dash-micon"><i
+                                class="ti ti-git-pull-request"></i></span>
+                                <?php echo e(__('Plan Requests')); ?></a>
+                </li>
+            <?php endif; ?>
+
+
+
+            <?php if(\Auth::user()->type == 'super admin'): ?>
+                <li class="nav-item <?php echo e(Request::segment(1) == 'coupon' ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('coupon.index')); ?>" class="nav-link"><span class="dash-micon"><i
+                                class="ti ti-clipboard-check"></i></span> <?php echo e(__('Coupons')); ?></a>
+                </li>
+            <?php endif; ?>
+
+            <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company'): ?>
+                <li class="nav-item">
+                    <a href="<?php echo e(route('order.index')); ?>" class="nav-link"><span class="dash-micon"><i
+                                class="ti ti-shopping-cart"></i></span><?php echo e(__('Orders')); ?></a>
+                </li>
+            <?php endif; ?>
+
+            <?php if(\Auth::user()->type == 'super admin'): ?>
+                <li
+                    class="nav-item <?php echo e(request()->is('email_template*') || request()->is('emailtemplate_lang*') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('manage.email.language', [$emailTemplate->id, \Auth::user()->lang])); ?>"
+                        class="nav-link">
+                        <span class="nav-micon"><i class="ti ti-template"></i></span>
+                        <?php echo e(__('Email Template')); ?></a>
+                </li>
+            <?php endif; ?>
+
+
+            <?php if(\Auth::user()->type == 'super admin'): ?>
+                <?php echo $__env->make('landingpage::menu.landingpage', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php endif; ?>
+
+            <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company'): ?>
+                <li class="nav-item">
+                    <a href="<?php echo e(route('settings')); ?>" class="nav-link"><span class="dash-micon"><i
+                                class="ti ti-settings"></i></span><?php echo e(__('Settings')); ?></a>
+                </li>
+            <?php endif; ?>
+
+        </ul>
+        
+    </div>
+</nav>
+
+
+<!-- <?php if(isset($settings['cust_theme_bg']) && $settings['cust_theme_bg'] == 'on'): ?>
     <nav class="dash-sidebar light-sidebar transprent-bg">
     <?php else: ?>
         <nav class="dash-sidebar light-sidebar">
-<?php endif; ?>
+<?php endif; ?> -->
+
+
 <div class="navbar-wrapper">
     <div class="m-header main-logo">
         <a href="#" class="b-brand">
@@ -29,9 +176,10 @@
 
         </a>
     </div>
+
     <div class="navbar-content">
         <ul class="dash-navbar">
-            <li class="dash-item">
+            <!-- <li class="dash-item">
                 <a href="<?php echo e(route('dashboard')); ?>" class="dash-link"><span class="dash-micon"><i
                             class="ti ti-home"></i></span><span class="dash-mtext"><?php echo e(__('Dashboard')); ?></span></a>
             </li>
@@ -44,9 +192,9 @@
                             class="dash-mtext"><?php echo e(__('Company')); ?> </span>
                     </a>
                 </li>
-            <?php endif; ?>
+            <?php endif; ?> -->
 
-            <?php if(\Auth::user()->type == 'company'): ?>
+            <!-- <?php if(\Auth::user()->type == 'company'): ?>
                 <li
                     class="dash-item dash-hasmenu <?php echo e(Request::segment(1) == 'employee' || Request::segment(1) == 'client' || Request::segment(1) == 'userlogs' || Request::segment(1) == 'clientlogs' ? 'active dash-trigger' : ''); ?>">
                     <a class="dash-link " data-toggle="collapse" role="button"
@@ -81,7 +229,9 @@
                             class="dash-mtext"><?php echo e(__('My Profile')); ?></span></a>
 
                 </li>
-            <?php endif; ?>
+            <?php endif; ?> -->
+
+
 
             <?php if(\Auth::user()->type == 'company' || \Auth::user()->type == 'employee'): ?>
                 <li class="dash-item dash-hasmenu">
@@ -339,13 +489,13 @@
                 </li>
             <?php endif; ?>
 
-            <?php if(\Auth::user()->type != 'super admin'): ?>
+            <!-- <?php if(\Auth::user()->type != 'super admin'): ?>
                 <li class="dash-item <?php echo e(request()->is('zoommeeting*') ? 'active' : ''); ?>">
                     <a href="<?php echo e(!empty(\Auth::user()->getDefualtViewRouteByModule('zoommeeting')) ? route(\Auth::user()->getDefualtViewRouteByModule('zoommeeting')) : route('zoommeeting.index')); ?>"
                         class="dash-link"><span class="dash-micon"><i class="ti ti-video-plus"></i></span><span
                             class="dash-mtext"><?php echo e(__('Zoom Metting')); ?></span></a>
                 </li>
-            <?php endif; ?>
+            <?php endif; ?> -->
 
             <?php if(\Auth::user()->type == 'company' || \Auth::user()->type == 'client'): ?>
                 <li class="dash-item <?php echo e(request()->is('contract*') ? 'active' : ''); ?>">
@@ -487,7 +637,7 @@
                 </li>
             <?php endif; ?>
 
-            <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company'): ?>
+            <!-- <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'company'): ?>
                 <li class="dash-item <?php if(str_contains(request()->url(), 'stripe')): ?> active <?php endif; ?>">
                     <a href="<?php echo e(route('plan.index')); ?>" class="dash-link"><span class="dash-micon"><i
                                 class="ti ti-trophy"></i></span><span
@@ -525,7 +675,7 @@
                         class="dash-link"><span class="dash-micon"><i class="ti ti-template"></i></span><span
                             class="dash-mtext"><?php echo e(__('Email Template')); ?></span></a>
                 </li>
-            <?php endif; ?>
+            <?php endif; ?> -->
 
 
             <?php if(\Auth::user()->type == 'company'): ?>
@@ -643,7 +793,7 @@
                 </li>
             <?php endif; ?>
 
-            <?php if(\Auth::user()->type == 'super admin'): ?>
+            <!-- <?php if(\Auth::user()->type == 'super admin'): ?>
                 <?php echo $__env->make('landingpage::menu.landingpage', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <?php endif; ?>
 
@@ -653,11 +803,10 @@
                                 class="ti ti-settings"></i></span><span
                             class="dash-mtext"><?php echo e(__('Settings')); ?></span></a>
                 </li>
-            <?php endif; ?>
+            <?php endif; ?> -->
 
         </ul>
     </div>
 </div>
 </nav>
-<!-- [ navigation menu ] end -->
 <?php /**PATH C:\Users\shari\ICU\SAAS CRM 19\code\resources\views/partials/admin/menu.blade.php ENDPATH**/ ?>

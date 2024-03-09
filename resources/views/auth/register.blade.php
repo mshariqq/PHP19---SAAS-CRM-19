@@ -5,9 +5,13 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
 \App\Models\Utility::setCaptchaConfig();
 
 @endphp
+
+
 @section('page-title')
-    {{__('Register')}}
+    {{__('Create your Account')}}
 @endsection
+
+
 @push('custom-scripts')
 @if(\App\Models\Utility::getValByName('recaptcha_module') == 'yes')
         {!! NoCaptcha::renderJs() !!}
@@ -23,9 +27,10 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
 @endsection
 
 @section('content')
+    <div class="card bg-white">
     <div class="card-body">
         <div>
-            <h2 class="mb-3 f-w-600">{{ __('Register') }}</h2>
+            <h4 class="mb-3 f-w-600">{{ __('Register') }}🙂</h4>
         </div>
         @if (session('status'))
             <div class="mb-4 font-medium text-lg text-green-600 text-danger">
@@ -35,7 +40,7 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
         <div class="custom-login-form">
             {{ Form::open(['route' => 'register', 'method' => 'post', 'id' => 'loginForm']) }}
                 <div class="form-group mb-3">
-                    <label class="form-label d-flex">{{ __('Full Name') }}</label>
+                    <label class="form-label "> <i class="fa fa-user mt-1" aria-hidden="true"></i> {{ __('Full Name') }}</label>
                     {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Username')]) }}
                     @error('name')
                     <span class="error invalid-name text-danger" role="alert">
@@ -44,7 +49,7 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
                 @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label d-flex">{{ __('Email') }}</label>
+                    <label class="form-label "> <i class="fa fa-envelope mt-1" aria-hidden="true"></i> {{ __('Email') }}</label>
                     {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => __('Email address')]) }}
                     @error('email')
                     <span class="error invalid-email text-danger" role="alert">
@@ -54,7 +59,7 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
                 </div>
                
                 <div class="form-group mb-3">
-                    <label class="form-label d-flex">{{ __('Password') }}</label>
+                    <label class="form-label "> <i class="fa fa-lock mt-1" aria-hidden="true"></i> {{ __('Password') }}</label>
                     {{ Form::password('password', ['class' => 'form-control', 'id' => 'input-password', 'placeholder' => __('Password')]) }}
                     @error('password')
                     <span class="error invalid-password text-danger" role="alert">
@@ -64,7 +69,7 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
                 </div>
               
                 <div class="form-group">
-                    <label class="form-control-label d-flex">{{ __('Confirm password') }}</label>
+                    <label class="form-control-label "> <i class="fa fa-lock mt-1" aria-hidden="true"></i> {{ __('Confirm password') }}</label>
                     {{ Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'confirm-input-password', 'placeholder' => __('Confirm Password')]) }}
 
                     @error('password_confirmation')
@@ -84,16 +89,20 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
 						</div>
 					@endif
                 <div class="d-grid">
-                <button class="btn btn-primary mt-2">
-                    {{ __('Register') }}
+                <button class="btn btn-success mt-5">
+                    {{ __('Proceed') }}
                 </button>
                 </div>
             {{ Form::close() }}
 
-            @if (\App\Models\Utility::getValByName('SIGNUP') == 'on')
-                <p class="my-4 text-center">{{__('Already have an account?') }} <a href="{{ url('login/'."$lang") }}" tabindex="0">{{ __('Login') }}</a></p>
-            @endif
+            
         </div>
+    </div>
+    <div class="card-footer">
+        @if (\App\Models\Utility::getValByName('SIGNUP') == 'on')
+                <p class="text-center">{{__('Already have an account?') }} <a href="{{ url('login/'."$lang") }}" tabindex="0">{{ __('Login') }}</a></p>
+            @endif
+    </div>
     </div>
 
 @endsection

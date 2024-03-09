@@ -10,11 +10,8 @@
   
 ?>
 
-<head>
-    <title> <?php echo $__env->yieldContent('page-title'); ?> -
-        <?php echo e(Utility::getValByName('title_text') ? Utility::getValByName('title_text') : config('app.name', 'CRMGo SaaS')); ?>
-
-    </title>
+<!-- <head> -->
+    
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
@@ -24,7 +21,11 @@
     <meta name="keyword" content="<?php echo e(!empty($settings['meta_keyword']) ? $settings['meta_keyword'] : ''); ?>">
     <meta name="description" content="<?php echo e(!empty($settings['meta_description']) ? $settings['meta_description'] : ''); ?>">
     
+    
+    
     <!-- Open Graph / Facebook -->
+    
+    
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo e(env('APP_URL')); ?>">
     <meta property="og:title" content="<?php echo e(!empty($settings['meta_keyword']) ? $settings['meta_keyword'] : ''); ?>">
@@ -51,8 +52,12 @@
     <!-- Favicon icon -->
     
     
+   
+   
     <!--Calendar -->
     <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/main.css')); ?>">
+    
+    
     <!-- font css -->
     <link rel="stylesheet" href="<?php echo e(asset('assets/fonts/tabler-icons.min.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('assets/fonts/feather.css')); ?>">
@@ -60,47 +65,49 @@
     <link rel="stylesheet" href="<?php echo e(asset('assets/fonts/material.css')); ?>">
 
 
-    <?php echo $__env->yieldPushContent('pre-purpose-css-page'); ?>
-    <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/animate.min.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/style.css')); ?>">
+    <!-- <?php echo $__env->yieldPushContent('pre-purpose-css-page'); ?> -->
+    <!-- <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/animate.min.css')); ?>"> -->
+    <!-- <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/style.css')); ?>"> -->
+    
+    
     <!-- vendor css -->
-    <?php if($SITE_RTL == 'on'): ?>
+    <!-- <?php if($SITE_RTL == 'on'): ?>
         <link rel="stylesheet" href="<?php echo e(asset('assets/css/style-rtl.css')); ?>" id="main-style-link">
-    <?php endif; ?>
+    <?php endif; ?> -->
 
-    <?php if($settings['cust_darklayout'] == 'on'): ?>
+    <!-- <?php if($settings['cust_darklayout'] == 'on'): ?>
         <link rel="stylesheet" href="<?php echo e(asset('assets/css/style-dark.css')); ?>" id="style">
         
     <?php else: ?>
         <link rel="stylesheet" href="<?php echo e(asset('assets/css/style.css')); ?>" id="style">
-    <?php endif; ?>
+    <?php endif; ?> -->
 
-    <link rel="stylesheet" href="<?php echo e(asset('assets/css/customizer.css')); ?>">
+    <!-- <link rel="stylesheet" href="<?php echo e(asset('assets/css/customizer.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('public/css/custom.css')); ?>" id="style">
-    <link rel="stylesheet" href="<?php echo e(asset('public/custom_assets/css/custom.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('public/custom_assets/css/custom.css')); ?>"> -->
 
-    
+    <!--  -->
     <!-- date -->
-    <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/datepicker-bs5.min.css')); ?>">
+    <!-- <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/datepicker-bs5.min.css')); ?>"> -->
 
     <!-- Dragulla -->
-    <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/dragula.min.css')); ?>">
+    <!-- <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/dragula.min.css')); ?>"> -->
 
     <!--bootstrap switch-->
-    <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/bootstrap-switch-button.min.css')); ?>">
+    <!-- <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/bootstrap-switch-button.min.css')); ?>"> -->
 
     <!-- fileupload-custom css -->
-    <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/dropzone.min.css')); ?>">
+    <!-- <link rel="stylesheet" href="<?php echo e(asset('assets/css/plugins/dropzone.min.css')); ?>"> -->
 
-    <link rel='stylesheet' href='https://unpkg.com/nprogress@0.2.0/nprogress.css' />
+    <!-- <link rel='stylesheet' href='https://unpkg.com/nprogress@0.2.0/nprogress.css' /> -->
 
     <link rel="stylesheet" href="<?php echo e(asset('css/summernote/summernote-bs4.css')); ?>">
-
+<!--  -->
       <link rel="stylesheet" href="<?php echo e(asset('css/custom-color.css')); ?>">
 
     <?php echo $__env->yieldPushContent('css-page'); ?>
 
-    <style>
+    <!-- <style>
         [dir="rtl"] .dash-sidebar {
             left: auto !important;
         }
@@ -125,7 +132,7 @@
         [dir="rtl"] .me-auto {
             margin-left: 10px !important;
         }
-    </style>
+    </style> -->
 
 <style>
     :root {
@@ -133,5 +140,5 @@
     }
 </style>
 
-</head>
+<!-- </head> -->
 <?php /**PATH C:\Users\shari\ICU\SAAS CRM 19\code\resources\views/partials/admin/head.blade.php ENDPATH**/ ?>

@@ -8,9 +8,13 @@
 @section('page-title')
     {{__('Password reset')}}
 @endsection
+
+
 @section('title')
     {{__('Password reset')}}
 @endsection
+
+
 @section('language')
     @foreach(Utility::languages() as $code => $language)
     <a href="{{ route('password.reset',$code) }}" tabindex="0" class="dropdown-item {{ $code == $lang ? 'active':'' }}">
@@ -20,6 +24,7 @@
 @endsection
 
 @section('content')
+    <div class="card bg-light">
     <div class="card-body">
         <div>
             <h2 class="mb-3 f-w-600">{{ __('Reset Password') }}</h2>
@@ -73,6 +78,7 @@
                 </div>
             {{ Form::close() }}
         </div>
+    </div>
     </div>
 
 @endsection

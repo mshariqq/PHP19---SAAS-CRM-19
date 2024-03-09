@@ -32,13 +32,14 @@
 @endsection
 
 @section('content')
+    <div class="card bg-white">
     <div class="card-body">
         <div>
             <h2 class="mb-3 f-w-600">{{ __('Email Verification') }}</h2>
         </div>
         @if (session('status') == 'verification-link-sent')
             <div class="mb-4 font-medium text-sm text-green-600 text-primary">
-                {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+                {{ __('Verification Link email sent!') }}
             </div>
         @endif
         <div class="mb-4 text-sm text-gray-600">
@@ -63,5 +64,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

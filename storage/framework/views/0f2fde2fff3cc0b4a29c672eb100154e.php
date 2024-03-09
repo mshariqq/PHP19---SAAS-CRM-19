@@ -34,9 +34,10 @@
 
 <?php $__env->startSection('content'); ?>
 
+		<div class="card bg-white">
 		<div class="card-body">
 			<div>
-				<h2 class="mb-3 f-w-600"><?php echo e(__('Please Login')); ?></h2>
+				<h4 class="mb-3 f-w-600"><?php echo e(__('Please Login')); ?></h4>
 			</div>
             <?php if(session('error')): ?>
             <div class="alert alert-danger">
@@ -48,7 +49,7 @@
 				<form method="POST" action="<?php echo e(route('login')); ?>" class="needs-validation" novalidate="">
 				<?php echo csrf_field(); ?>
 					<div class="form-group mb-3">
-						<label class="form-label"><?php echo e(__('Email')); ?></label>
+						<label class="form-label"> <i class="fa fa-envelope" aria-hidden="true"></i> <?php echo e(__('Email')); ?></label>
 						<input id="email" type="email" class="form-control  <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -73,7 +74,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
 					</div>
 					<div class="form-group mb-3 pss-field">
-						<label class="form-label"><?php echo e(__('Password')); ?></label>
+						<label class="form-label"> <i class="fa fa-lock" aria-hidden="true"></i> <?php echo e(__('Password')); ?></label>
 						<input id="password" type="password" class="form-control  <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -123,19 +124,22 @@ unset($__errorArgs, $__bag); ?>
 						</div>
 					<?php endif; ?>
 					<div class="d-grid">
-						<button class="btn btn-primary mt-2" type="submit">
-							<?php echo e(__('Login')); ?>
-
+						<button class="btn btn-success mt-2" type="submit">
+							<?php echo e(__('Login')); ?> <i class="fa fa-key" aria-hidden="true"></i>
 						</button>
 					</div>
 				</form>
-				<?php if(Utility::getValByName('SIGNUP')=='on'): ?>
-					<p class="my-4 text-center"><?php echo e(__("Don't have an account?")); ?>
+				
+			</div>
+		</div>
+		<div class="card-footer">
+		<?php if(Utility::getValByName('SIGNUP')=='on'): ?>
+					<p class=" text-center"><?php echo e(__("Don't have an account?")); ?>
 
 						<a href="<?php echo e(route('register',$lang)); ?>" tabindex="0"><?php echo e(__('Register')); ?></a>
 					</p>
 				<?php endif; ?>
-			</div>
+		</div>
 		</div>
 <!-- [ auth-signup ] end -->
 

@@ -17,9 +17,10 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
     @endforeach
 @endsection
 @section('content')
+    <div class="card bg-white">
     <div class="card-body">
         <div>
-            <h2 class="mb-3 f-w-600">{{ __('Forgot Password') }}</h2>
+            <h4 class="mb-3 f-w-600">{{ __('Forgot Password') }}</h4>
         </div>
         @if (session('status'))
             <div class="alert alert-success" role="alert">
@@ -30,7 +31,7 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
             {{Form::open(array('route'=>'password.email','method'=>'post','id'=>'loginForm'))}}
                 <div class="">
                     <div class="form-group mb-3">
-                        <label class="form-label">{{ __('Email') }}</label>
+                        <label class="form-label"> <i class="fa fa-envelope" aria-hidden="true"></i> {{ __('Your Email') }}</label>
                         {{Form::text('email',null,array('class'=>'form-control','placeholder'=>__('Enter Your Email')))}}
                         @error('email')
                         <span class="error invalid-email text-danger" role="alert">
@@ -40,7 +41,7 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
 
                     </div>
                     <div class="d-grid">
-                        {{Form::submit(__('Reset Password'),array('class'=>'btn btn-primary btn-block mt-2','id'=>'saveBtn'))}}
+                        {{Form::submit(__('Send Link'),array('class'=>'btn btn-success btn-block mt-2','id'=>'saveBtn'))}}
                     </div>
                     {{ Form::close() }}
                     @if(Utility::getValByName('SIGNUP') == 'on')
@@ -48,10 +49,14 @@ $footer_text = isset(\App\Models\Utility::settings()['footer_text']) ? \App\Mode
                                 <a href="{{ route('register',$lang) }}" class="my-4 text-primary">{{ __('Create account') }}</a>
                         </p> -->
                     @endif
-                    <p class="my-4 text-center">{{__('Back to ')}}
-                        <a href="{{route('login',$lang)}}" class="my-4 text-primary">{{ __('Login') }}</a>
-                    </p>
+                    
                 </div>
         </div>
+    </div>
+    <div class="card-footer">
+    <p class="mb-0 text-center">{{__('Back to ')}}
+                        <a href="{{route('login',$lang)}}" class="text-primary">{{ __('Login') }}</a>
+                    </p>
+    </div>
     </div>
 @endsection
