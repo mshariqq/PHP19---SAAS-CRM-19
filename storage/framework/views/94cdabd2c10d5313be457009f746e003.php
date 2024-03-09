@@ -2,7 +2,6 @@
     $settings = Utility::settings();
     $color = !empty($settings['color']) ? $settings['color'] : 'theme-3';
 
-
     if (isset($settings['color_flag']) && $settings['color_flag'] == 'true') {
         $themeColor = 'custom-color';
     } else {
